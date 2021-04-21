@@ -33,6 +33,7 @@ const initialWeather = {
     desc: '',
     hum: '',
     wind: '',
+    day: [],
 }
 
 export const WeatherApp = () => {
@@ -67,22 +68,23 @@ export const WeatherApp = () => {
     useEffect(() => {
         getWeatherInfo(pos)
             .then(data => {
-                const date = convertDate(data.current.dt);
+                const date = convertDate(data.date);
 
                 setWeather({
                     ...weather,
                     date: date,
                     lat: data.lat,
                     lon: data.lon,
-                    temp: data.current.temp,
-                    icon: data.current.weather[0].icon,
-                    desc: data.current.weather[0].main,
-                    hum: data.current.humidity,
-                    wind: data.current.wind_speed,
+                    temp: data.temp,
+                    icon: data.icon,
+                    desc: data.desc,
+                    hum: data.hum,
+                    wind: data.wind,
+                    day: data.day
                 })
             })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pos])
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [pos])
 
     return (
         <Paper

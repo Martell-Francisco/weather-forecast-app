@@ -1,7 +1,11 @@
 
-export const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
+export const getChartData = (weatherInfo) => {
+
+    const labels = weatherInfo.day.map((day)=>{
+        return day.time
+    })
+
+    const dataset = [
         {
             label: 'Temp',
             fill: true,
@@ -21,7 +25,20 @@ export const data = {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [65, 59, 80, 123, 56, 55, 70]
-        }
-    ]
-};
+            data: weatherInfo.day.map(day => {
+                return day.temp
+            })
+        }]
+
+    
+    
+    
+
+
+    const data = {
+        labels: labels,
+        datasets: dataset
+    }
+
+    return data
+}
