@@ -8,11 +8,15 @@ import date from 'date-and-time';
 
 const useStyles = makeStyles({
     root: {
-        padding: '30px',
+        padding: '30px 50px 30px 50px',
         margin: '20px',
-        minHeight: 'inherit'
+        minHeight: '88vh',
+        backgroundImage: 'url(./assets/img/background.jpg)',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
     },
     title: {
+        color: 'white',
         padding: '0px 0px 10px 0px',
         fontWeight: 'bold'
     },

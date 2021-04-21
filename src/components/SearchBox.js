@@ -4,10 +4,11 @@ import React from 'react'
 const useStyles = makeStyles({
     root: {
         flexGrow: 1,
-      },
-      searchBox: {
-        margin: 10
-      },
+    },
+    searchBox: {
+        margin: 10,
+        backgroundColor: 'white'
+    },
 })
 
 
@@ -29,8 +30,8 @@ export const SearchBox = () => {
                     variant='outlined'
                     size='small'
                     label='City name' />
-                <Button 
-                    variant="contained" 
+                <Button
+                    variant="contained"
                     color="primary"
                     size='medium'>
                     Search

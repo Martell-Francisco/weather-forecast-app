@@ -60,7 +60,7 @@ export const WeatherDisplay = ({ weather }) => {
                             direction='row'
                             justify='center'
                             alignItems='center'>
-                            <img className={classes.media} src={`http://openweathermap.org/img/w/${weather.icon}.png`} alt='Weather icon' />
+                            <img className={classes.media} src={`http://openweathermap.org/img/w/${weather.icon || '01d'}.png`} alt='Weather icon' />
                             <Typography
                                className={classes.fontPrimary}>
                                 {`${weather.temp}°`}
