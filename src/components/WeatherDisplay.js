@@ -1,54 +1,74 @@
 import { Card, CardContent, Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 
+
 const useStyles = makeStyles({
     root: {
         display: 'block',
-
+        minHeight: 'inherit',
         margin: '0px',
         padding: '10px 0px 0px 0px',
     },
+    card:{
+        padding: '20px'
+    },
     date: {
-        fontSize: '12rem'
+        fontSize: '1.3rem',
+        fontWeight:'bold'
+    },
+    fontPrimary:{
+        fontSize: '3.5rem',
+        fontWeight:'bold'
+    },
+    fontSecondary:{
+        fontSize: '1.5rem',
+        fontWeight:'normal'
     },
     humidityWindDisplay: {
         display: 'flex',
-        flexWrap:'nowrap',
+        flexWrap: 'nowrap',
         fontSize: '10rem'
+    },
+    media: {
+        height: '30%',
+        width: '30%'
     }
 });
 
-export const WeatherDisplay = () => {
+export const WeatherDisplay = ({ weather }) => {
     const classes = useStyles();
-
-    const iconCode = '04n'
 
     return (
         <Container
             className={classes.root}
             maxWidth='xs'>
-            <Card>
+            <Card
+                className={classes.card}
+                height="100%">
                 <CardContent>
                     <Grid
                         container
                         direction='column'
                         alignItems='center'>
-                        <Typography>
-                            Tuesday, 20 April 2021 0:43:01
+                        <Typography
+                            className={classes.date}>
+                            {weather.date}
                         </Typography>
                         <Grid
                             container
                             item
                             direction='row'
-                            justify='space-between'
+                            justify='center'
                             alignItems='center'>
-                            <img src={`http://openweathermap.org/img/w/${iconCode}.png`} alt='Weather icon' />
-                            <Typography>
-                                24°
+                            <img className={classes.media} src={`http://openweathermap.org/img/w/${weather.icon}.png`} alt='Weather icon' />
+                            <Typography
+                               className={classes.fontPrimary}>
+                                {`${weather.temp}°`}
                             </Typography>
                         </Grid>
-                        <Typography >
-                            Clouds
+                        <Typography 
+                             className={classes.fontPrimary}>
+                            {weather.desc}
                         </Typography>
                         <Grid
                             className={classes.humidityWindDisplay}
@@ -62,11 +82,12 @@ export const WeatherDisplay = () => {
                                 justify='space-between'
                                 alignItems='center'
                                 item>
-                                <Typography>
+                                <Typography
+                                     className={classes.fontSecondary}>
                                     Humidity
                                 </Typography>
                                 <Typography>
-                                    24°
+                                    {`${weather.hum}%`}
                                 </Typography>
                             </Grid>
                             <Grid
@@ -75,11 +96,12 @@ export const WeatherDisplay = () => {
                                 justify='space-between'
                                 alignItems='center'
                                 item>
-                                <Typography>
+                                <Typography
+                                    className={classes.fontSecondary}>
                                     Wind speed
                                 </Typography>
                                 <Typography>
-                                    24°
+                                    {`${weather.wind} Km/h`}
                                 </Typography>
                             </Grid>
                         </Grid>

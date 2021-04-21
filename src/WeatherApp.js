@@ -1,23 +1,88 @@
-import { Grid, makeStyles, Paper, Typography } from '@material-ui/core'
-import React from 'react'
+import { Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
 import { ChartBox } from './components/ChartBox'
 import { SearchBox } from './components/SearchBox'
 import { WeatherDisplay } from './components/WeatherDisplay'
+import { getWeatherInfo } from './helpers/getWeatherInfo'
+import date from 'date-and-time';
 
 const useStyles = makeStyles({
     root: {
         padding: '30px',
-        minHeight: '90vh',
-        minWidth: '90vw'
-
+        margin: '20px',
+        minHeight: 'inherit'
     },
     title: {
-        padding: '0px 0px 10px 0px'
+        padding: '0px 0px 10px 0px',
+        fontWeight: 'bold'
     },
 });
 
+const initialPos = {
+    lat: '51.509865',
+    lon: '-0.118092',
+    loading: false
+}
+
+const initialWeather = {
+    date: '',
+    lat: '',
+    lon: '',
+    temp: '',
+    icon: '',
+    desc: '',
+    hum: '',
+    wind: '',
+}
+
 export const WeatherApp = () => {
     const classes = useStyles();
+    const [pos, setPos] = useState(initialPos);
+    const [weather, setWeather] = useState(initialWeather);
+
+    const getCurrentPosition = () => {
+        navigator.geolocation.getCurrentPosition(showPosition, handleError);
+    }
+    
+    const showPosition = (position) => {
+        setPos({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+        })
+    }
+
+    const handleError = () => {
+        throw new Error('Cannot obtain position');
+    }
+
+    const convertDate = (dt) => {
+        return date.format(new Date(dt*1000), 'dddd, MMM DD YYYY, hh:mm A');
+    }
+
+    useEffect(() => {
+        getCurrentPosition();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        getWeatherInfo(pos)
+            .then(data => {
+                const date = convertDate(data.current.dt);
+
+                setWeather({
+                    ...weather,
+                    date: date,
+                    lat: data.lat,
+                    lon: data.lon,
+                    temp: data.current.temp,
+                    icon: data.current.weather[0].icon,
+                    desc: data.current.weather[0].main,
+                    hum: data.current.humidity,
+                    wind: data.current.wind_speed,
+                })
+            })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pos])
 
     return (
         <Paper
@@ -33,14 +98,15 @@ export const WeatherApp = () => {
                     variant='h3'>
                     Weather App
                 </Typography>
+                <Divider variant="middle" />
                 <SearchBox />
                 <Grid
                     container
                     direction='row'
                     justify='space-between'
                     alignItems='flex-start'>
-                    <WeatherDisplay />
-                    <ChartBox />
+                    <WeatherDisplay weather={weather}/>
+                    <ChartBox weather={weather}/>
                 </Grid>
             </Grid>
         </Paper>
