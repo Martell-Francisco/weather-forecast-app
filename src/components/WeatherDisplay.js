@@ -1,7 +1,6 @@
 import { Card, CardContent, Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 
-
 const useStyles = makeStyles({
     root: {
         display: 'block',

@@ -1,10 +1,11 @@
-import { Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { ChartBox } from './components/ChartBox'
-import { SearchBox } from './components/SearchBox'
+import { Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Chart } from './components/Chart'
+import { SearchBox } from './components/ui/SearchBox'
 import { WeatherDisplay } from './components/WeatherDisplay'
 import { getWeatherInfo } from './helpers/getWeatherInfo'
-import date from 'date-and-time';
+import { getCurrentPosition } from './helpers/getCurrentPosition'
+import { getFullDate } from './helpers/getDateTimeFormat';
 
 const useStyles = makeStyles({
     root: {
@@ -45,34 +46,24 @@ export const WeatherApp = () => {
     const [pos, setPos] = useState(initialPos);
     const [weather, setWeather] = useState(initialWeather);
 
-    const getCurrentPosition = () => {
-        navigator.geolocation.getCurrentPosition(showPosition, handleError);
-    }
-    
-    const showPosition = (position) => {
-        setPos({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-        })
-    }
-
-    const handleError = () => {
-        throw new Error('Cannot obtain position');
-    }
-
-    const convertDate = (dt) => {
-        return date.format(new Date(dt*1000), 'dddd, MMM DD YYYY, hh:mm A');
-    }
-
     useEffect(() => {
-        getCurrentPosition();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        getCurrentPosition()
+            .then((position) => {
+                setPos({
+                    lat: position.coords.latitude,
+                    lon: position.coords.longitude,
+                })
+            })
+            .catch((err) => {
+                console.error(err.message);
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         getWeatherInfo(pos)
             .then(data => {
-                const date = convertDate(data.date);
+                const date = getFullDate(data.date);
 
                 setWeather({
                     ...weather,
@@ -87,8 +78,8 @@ export const WeatherApp = () => {
                     day: data.day
                 })
             })
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [pos])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pos])
 
     return (
         <Paper
@@ -111,8 +102,8 @@ export const WeatherApp = () => {
                     direction='row'
                     justify='space-between'
                     alignItems='flex-start'>
-                    <WeatherDisplay weather={weather}/>
-                    <ChartBox weather={weather}/>
+                    <WeatherDisplay weather={weather} />
+                    <Chart weather={weather} />
                 </Grid>
             </Grid>
         </Paper>

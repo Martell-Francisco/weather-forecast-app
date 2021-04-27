@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 
 });
 
-export const ChartBox = ({weather}) => {
+export const Chart = ({weather}) => {
     const classes = useStyles();
 
     const data = getChartData(weather);

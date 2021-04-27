@@ -1,23 +1,21 @@
-import { getTime } from "./getTime";
+import { getTime } from "./getDateTimeFormat";
 
 
-export const getWeatherInfo = async ({lat='51.509865', lon='-0.118092'}) => {
+export const getWeatherInfo = async ({ lat = '51.509865', lon = '-0.118092' }) => {
     const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
     const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
     try {
         const res = await fetch(url);
         const data = await res.json();
-        
-        
+
         const dayDetail = data.hourly.map(hour => {
             return {
                 time: getTime(hour.dt),
                 temp: hour.temp,
             }
         })
-        
-        
+
         const weatherInfo = {
             date: data.current.dt,
             lat: data.lat,
@@ -29,9 +27,10 @@ export const getWeatherInfo = async ({lat='51.509865', lon='-0.118092'}) => {
             wind: data.current.wind_speed,
             day: dayDetail,
         }
-        
+
         return weatherInfo
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err);
     }
 }
