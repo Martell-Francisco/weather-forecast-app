@@ -3,10 +3,20 @@ import React from 'react'
 
 const useStyles = makeStyles({
     root: {
+        width: '100%',
+        height: '90%',
     },
     card: {
-        minHeight: 'auto',
-        minWidth: 'auto'
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    card_content: {
+        alignContent: 'space-between',
+        width: '100%',
+        height: '100%',
     },
     date: {
         fontSize: '1.3rem',
@@ -19,6 +29,11 @@ const useStyles = makeStyles({
     fontSecondary: {
         fontSize: '1.5rem',
         fontWeight: 'normal'
+    },
+    fontTerciary: {
+        fontSize: '1rem',
+        fontWeight: 'normal',
+        alignContent:'center'
     },
     humidityWindDisplay: {
         display: 'flex',
@@ -37,14 +52,17 @@ export const WeatherDisplay = ({ weather }) => {
     return (
         <Box
             display='flex'
-            alignContent='flex-start'>
-            <Card>
-                <CardContent
-                    className={classes.card}>
+            justifyContent='flex-start'
+            alignContent='center'
+            className={classes.root}>
+            <Card
+                className={classes.card}>
+                <CardContent>
                     <Grid
                         container
                         direction='column'
-                        alignItems='center'>
+                        alignItems='center'
+                        alignContent='space-evenly'>
                         <Typography
                             className={classes.date}>
                             {weather.date}
@@ -100,6 +118,10 @@ export const WeatherDisplay = ({ weather }) => {
                                 </Typography>
                             </Grid>
                         </Grid>
+                        <Typography
+                            className={classes.fontTerciary}>
+                            {weather.city}
+                        </Typography>
                     </Grid>
                 </CardContent>
             </Card>

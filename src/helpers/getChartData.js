@@ -1,7 +1,7 @@
 
 export const getChartData = (weatherInfo) => {
 
-    const labels = weatherInfo.day.map((day)=>{
+    const labels = weatherInfo.day.map((day) => {
         return day.time
     })
 
@@ -30,15 +30,16 @@ export const getChartData = (weatherInfo) => {
             })
         }]
 
-    
-    
-    
-
+    const options = {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 2,
+    }
 
     const data = {
         labels: labels,
         datasets: dataset
     }
 
-    return data
+    return {data,options}
 }

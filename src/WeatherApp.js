@@ -11,7 +11,8 @@ import { About } from './components/About'
 
 const useStyles = makeStyles({
     root: {
-        marginTop: '11em'
+        marginTop: '11em',
+        justifyContent: 'space-between'
     },
     card: {
         backgroundImage: 'url(./assets/img/background.jpg)',
@@ -19,6 +20,9 @@ const useStyles = makeStyles({
         backgroundSize: 'cover',
         minWidth: '85vw',
         minHeight: '70vh'
+    },
+    card_items: {
+
     },
 });
 
@@ -29,6 +33,7 @@ const initialPos = {
 }
 
 const initialWeather = {
+    city: '',
     date: '',
     lat: '',
     lon: '',
@@ -75,7 +80,8 @@ export const WeatherApp = () => {
                     desc: data.desc,
                     hum: data.hum,
                     wind: data.wind,
-                    day: data.day
+                    day: data.day,
+                    city: data.city,
                 })
             })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,15 +105,26 @@ export const WeatherApp = () => {
                         <Box
                             display='flex'
                             flexDirection='row'
-                            alignContent='center'
+                            justifyContent='center'
+                            alignContent='space-between'
+                            width='100%'
+                            height='100%'
                             p={1}
                             m={1}>
                             <Box
-                                width="100%">
+                                display='flex'
+                                width='30%'
+                                height='100%'
+                                justifyContent='center'
+                                alignItems='center'>
                                 <WeatherDisplay weather={weather} />
                             </Box>
                             <Box
-                                flexShrink={0}>
+                                display='flex'
+                                width='70%'
+                                height='100%'
+                                justifyContent='center'
+                                alignItems='center'>
                                 <Chart weather={weather} />
                             </Box>
                         </Box>

@@ -9,6 +9,8 @@ export const getWeatherInfo = async ({ lat = '51.509865', lon = '-0.118092' }) =
         const res = await fetch(url);
         const data = await res.json();
 
+
+        console.log(data);
         const dayDetail = data.hourly.map(hour => {
             return {
                 time: getTime(hour.dt),
@@ -17,6 +19,7 @@ export const getWeatherInfo = async ({ lat = '51.509865', lon = '-0.118092' }) =
         })
 
         const weatherInfo = {
+            city: data.timezone,
             date: data.current.dt,
             lat: data.lat,
             lon: data.lon,
