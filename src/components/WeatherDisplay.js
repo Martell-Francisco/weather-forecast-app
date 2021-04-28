@@ -1,27 +1,24 @@
-import { Card, CardContent, Container, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Box, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 
 const useStyles = makeStyles({
     root: {
-        display: 'block',
-        minHeight: 'inherit',
-        margin: '0px',
-        padding: '10px 0px 0px 0px',
     },
-    card:{
-        padding: '20px'
+    card: {
+        minHeight: 'auto',
+        minWidth: 'auto'
     },
     date: {
         fontSize: '1.3rem',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
-    fontPrimary:{
+    fontPrimary: {
         fontSize: '3.5rem',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
-    fontSecondary:{
+    fontSecondary: {
         fontSize: '1.5rem',
-        fontWeight:'normal'
+        fontWeight: 'normal'
     },
     humidityWindDisplay: {
         display: 'flex',
@@ -38,13 +35,12 @@ export const WeatherDisplay = ({ weather }) => {
     const classes = useStyles();
 
     return (
-        <Container
-            className={classes.root}
-            maxWidth='xs'>
-            <Card
-                className={classes.card}
-                height="100%">
-                <CardContent>
+        <Box
+            display='flex'
+            alignContent='flex-start'>
+            <Card>
+                <CardContent
+                    className={classes.card}>
                     <Grid
                         container
                         direction='column'
@@ -61,12 +57,12 @@ export const WeatherDisplay = ({ weather }) => {
                             alignItems='center'>
                             <img className={classes.media} src={`http://openweathermap.org/img/w/${weather.icon || '01d'}.png`} alt='Weather icon' />
                             <Typography
-                               className={classes.fontPrimary}>
+                                className={classes.fontPrimary}>
                                 {`${weather.temp}°`}
                             </Typography>
                         </Grid>
-                        <Typography 
-                             className={classes.fontPrimary}>
+                        <Typography
+                            className={classes.fontPrimary}>
                             {weather.desc}
                         </Typography>
                         <Grid
@@ -82,7 +78,7 @@ export const WeatherDisplay = ({ weather }) => {
                                 alignItems='center'
                                 item>
                                 <Typography
-                                     className={classes.fontSecondary}>
+                                    className={classes.fontSecondary}>
                                     Humidity
                                 </Typography>
                                 <Typography>
@@ -107,6 +103,6 @@ export const WeatherDisplay = ({ weather }) => {
                     </Grid>
                 </CardContent>
             </Card>
-        </Container>
+        </Box>
     )
 }

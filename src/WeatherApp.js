@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import { Box, makeStyles } from '@material-ui/core'
 import { Chart } from './components/Chart'
-import { SearchBox } from './components/ui/SearchBox'
 import { WeatherDisplay } from './components/WeatherDisplay'
 import { getWeatherInfo } from './helpers/getWeatherInfo'
 import { getCurrentPosition } from './helpers/getCurrentPosition'
 import { getFullDate } from './helpers/getDateTimeFormat';
+import { Navbar } from './components/ui/Navbar'
+import { About } from './components/About'
 
 const useStyles = makeStyles({
     root: {
-        padding: '30px 50px 30px 50px',
-        margin: '20px',
-        minHeight: '88vh',
+        marginTop: '11em'
+    },
+    card: {
         backgroundImage: 'url(./assets/img/background.jpg)',
         backgroundPosition: 'center',
-        backgroundSize: 'cover'
-    },
-    title: {
-        color: 'white',
-        padding: '0px 0px 10px 0px',
-        fontWeight: 'bold'
+        backgroundSize: 'cover',
+        minWidth: '85vw',
+        minHeight: '70vh'
     },
 });
 
@@ -45,6 +44,7 @@ export const WeatherApp = () => {
     const classes = useStyles();
     const [pos, setPos] = useState(initialPos);
     const [weather, setWeather] = useState(initialWeather);
+    const [isFlipped, setIsFlipped] = useState(false);
 
     useEffect(() => {
         getCurrentPosition()
@@ -82,30 +82,49 @@ export const WeatherApp = () => {
     }, [pos])
 
     return (
-        <Paper
-            className={classes.root}
-            elevation={3}>
-            <Grid
-                container
-                direction='column'
-                justify='center'
-                alignItems='flex-start'>
-                <Typography
-                    className={classes.title}
-                    variant='h3'>
-                    Weather App
-                </Typography>
-                <Divider variant="middle" />
-                <SearchBox />
-                <Grid
-                    container
-                    direction='row'
-                    justify='space-between'
-                    alignItems='flex-start'>
-                    <WeatherDisplay weather={weather} />
-                    <Chart weather={weather} />
-                </Grid>
-            </Grid>
-        </Paper>
+        <Box
+            display='flex'
+            flexDirection='column'
+            justifyContent='center'
+            alignContent='center'
+            className={classes.root}>
+            <Navbar isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
+            <Box
+                display='flex'>
+                <Flippy
+                    isFlipped={isFlipped}
+                    flipDirection="horizontal">
+                    <FrontSide
+                        className={classes.card}>
+                        <Box
+                            display='flex'
+                            flexDirection='row'
+                            alignContent='center'
+                            p={1}
+                            m={1}>
+                            <Box
+                                width="100%">
+                                <WeatherDisplay weather={weather} />
+                            </Box>
+                            <Box
+                                flexShrink={0}>
+                                <Chart weather={weather} />
+                            </Box>
+                        </Box>
+                    </FrontSide>
+                    <BackSide
+                        className={classes.card}>
+                        <Box
+                            display='flex'
+                            flexDirection='row'
+                            width='auto'
+                            p={1}
+                            m={1}>
+                            <About />
+                        </Box>
+                    </BackSide>
+                </Flippy>
+            </Box>
+        </Box>
     )
 }
