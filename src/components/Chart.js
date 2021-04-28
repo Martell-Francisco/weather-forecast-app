@@ -5,14 +5,16 @@ import { Line } from 'react-chartjs-2';
 
 const useStyles = makeStyles({
     root: {
-        width: '90%',
-        height: '90%',
+        width: '100%',
+        height: '100%',
     },
     card: {
         display: 'flex',
         width: '100%',
         height: '100%',
         alignItems: 'center',
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(255, 255, 255 ,0.7)',
     },
     card_content: {
         width: '100%',

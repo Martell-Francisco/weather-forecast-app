@@ -14,15 +14,15 @@ const useStyles = makeStyles({
         marginTop: '11em',
         justifyContent: 'space-between'
     },
+    card_container: {
+        margin: '0px',
+    },
     card: {
         backgroundImage: 'url(./assets/img/background.jpg)',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         minWidth: '85vw',
         minHeight: '70vh'
-    },
-    card_items: {
-
     },
 });
 
@@ -99,21 +99,23 @@ export const WeatherApp = () => {
                 display='flex'>
                 <Flippy
                     isFlipped={isFlipped}
-                    flipDirection="horizontal">
+                    flipDirection="horizontal"
+                    style={{
+                        margin: '0px',
+                    }}>
                     <FrontSide
                         className={classes.card}>
                         <Box
                             display='flex'
                             flexDirection='row'
-                            justifyContent='center'
-                            alignContent='space-between'
+                            justifyContent='space-between'
                             width='100%'
                             height='100%'
-                            p={1}
-                            m={1}>
+                            p={2}
+                            m={0}>
                             <Box
                                 display='flex'
-                                width='30%'
+                                width='35%'
                                 height='100%'
                                 justifyContent='center'
                                 alignItems='center'>
@@ -121,7 +123,7 @@ export const WeatherApp = () => {
                             </Box>
                             <Box
                                 display='flex'
-                                width='70%'
+                                width='60%'
                                 height='100%'
                                 justifyContent='center'
                                 alignItems='center'>

@@ -4,14 +4,15 @@ import React from 'react'
 const useStyles = makeStyles({
     root: {
         width: '100%',
-        height: '90%',
+        height: '100%',
     },
     card: {
         display: 'flex',
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255 ,0.7)',
     },
     card_content: {
         alignContent: 'space-between',
@@ -33,7 +34,7 @@ const useStyles = makeStyles({
     fontTerciary: {
         fontSize: '1rem',
         fontWeight: 'normal',
-        alignContent:'center'
+        alignContent: 'center'
     },
     humidityWindDisplay: {
         display: 'flex',
@@ -62,7 +63,7 @@ export const WeatherDisplay = ({ weather }) => {
                         container
                         direction='column'
                         alignItems='center'
-                        alignContent='space-evenly'>
+                        alignContent='space-around'>
                         <Typography
                             className={classes.date}>
                             {weather.date}
