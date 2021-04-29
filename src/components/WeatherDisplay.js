@@ -44,8 +44,7 @@ const useStyles = makeStyles({
 
 export const WeatherDisplay = ({ isLoading, weather }) => {
     const classes = useStyles();
-
-    console.log(`weather display: ${isLoading}`);
+    
     return (
         <Box
             display='flex'

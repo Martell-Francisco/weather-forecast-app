@@ -145,9 +145,10 @@ export const WeatherApp = () => {
                         <Box
                             display='flex'
                             flexDirection='row'
-                            width='auto'
-                            p={1}
-                            m={1}>
+                            width='100%'
+                            height='100%'
+                            p={2}
+                            m={0}>
                             <About />
                         </Box>
                     </BackSide>
