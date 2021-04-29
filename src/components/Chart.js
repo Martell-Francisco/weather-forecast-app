@@ -1,6 +1,6 @@
 import React from 'react'
 import { getChartData } from '../helpers/getChartData';
-import { Box, Card, CardContent, makeStyles } from '@material-ui/core'
+import { Box, Card, CardContent, CircularProgress, makeStyles } from '@material-ui/core'
 import { Line } from 'react-chartjs-2';
 
 const useStyles = makeStyles({
@@ -17,12 +17,14 @@ const useStyles = makeStyles({
         backgroundColor: 'rgba(255, 255, 255 ,0.7)',
     },
     card_content: {
+        alignItems: 'center',
+        justifyContent: 'center',
         width: '100%',
         height: '100%',
     },
 });
 
-export const Chart = ({ weather }) => {
+export const Chart = ({ isLoading, weather }) => {
     const classes = useStyles();
 
     const { data, options } = getChartData(weather);
@@ -35,9 +37,19 @@ export const Chart = ({ weather }) => {
                 className={classes.card}>
                 <CardContent
                     className={classes.card_content}>
-                    <Line
-                        data={data}
-                        options={options} />
+                    <Box
+                        display='flex'
+                        flexDirection='row'
+                        justifyContent='center'
+                        alignItems='center'>
+                        {
+                            isLoading
+                                ? <CircularProgress />
+                                : <Line
+                                    data={data}
+                                    options={options} />
+                        }
+                    </Box>
                 </CardContent>
             </Card>
         </Box>

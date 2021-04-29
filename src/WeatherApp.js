@@ -50,14 +50,19 @@ export const WeatherApp = () => {
     const [pos, setPos] = useState(initialPos);
     const [weather, setWeather] = useState(initialWeather);
     const [isFlipped, setIsFlipped] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
+
         getCurrentPosition()
             .then((position) => {
                 setPos({
                     lat: position.coords.latitude,
                     lon: position.coords.longitude,
-                })
+                });
+
+
             })
             .catch((err) => {
                 console.error(err.message);
@@ -66,6 +71,8 @@ export const WeatherApp = () => {
     }, [])
 
     useEffect(() => {
+       
+
         getWeatherInfo(pos)
             .then(data => {
                 const date = getFullDate(data.date);
@@ -83,6 +90,8 @@ export const WeatherApp = () => {
                     day: data.day,
                     city: data.city,
                 })
+
+                setIsLoading(false);
             })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pos])
@@ -115,19 +124,19 @@ export const WeatherApp = () => {
                             m={0}>
                             <Box
                                 display='flex'
-                                width='35%'
+                                width='25%'
                                 height='100%'
                                 justifyContent='center'
                                 alignItems='center'>
-                                <WeatherDisplay weather={weather} />
+                                <WeatherDisplay isLoading={isLoading} weather={weather} />
                             </Box>
                             <Box
                                 display='flex'
-                                width='60%'
+                                width='70%'
                                 height='100%'
                                 justifyContent='center'
                                 alignItems='center'>
-                                <Chart weather={weather} />
+                                <Chart isLoading={isLoading} weather={weather} />
                             </Box>
                         </Box>
                     </FrontSide>
