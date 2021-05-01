@@ -44,89 +44,89 @@ const useStyles = makeStyles({
 
 export const WeatherDisplay = ({ isLoading, weather }) => {
     const classes = useStyles();
-    
+
     return (
-        <Box
-            display='flex'
-            justifyContent='flex-start'
-            alignContent='center'
-            className={classes.root}>
-            <Card
-                className={classes.card}>
-                <CardContent>
-                    <Grid
-                        container
-                        direction='column'
-                        alignItems='center'
-                        alignContent='space-around'>
-                        {
-                            isLoading
-                                ? <CircularProgress />
-                                : <>
-                                    <Typography
-                                        className={classes.date}>
-                                        {weather.date}
-                                    </Typography>
-                                    <Grid
-                                        container
-                                        item
-                                        direction='row'
-                                        justify='center'
-                                        alignItems='center'>
-                                        <img className={classes.media} src={`http://openweathermap.org/img/w/${weather.icon || '01d'}.png`} alt='Weather icon' />
+            <Box
+                display='flex'
+                justifyContent='flex-start'
+                alignContent='center'
+                className={classes.root}>
+                <Card
+                    className={classes.card}>
+                    <CardContent>
+                        <Grid
+                            container
+                            direction='column'
+                            alignItems='center'
+                            alignContent='space-around'>
+                            {
+                                isLoading
+                                    ? <CircularProgress />
+                                    : <>
+                                        <Typography
+                                            className={classes.date}>
+                                            {weather.date}
+                                        </Typography>
+                                        <Grid
+                                            container
+                                            item
+                                            direction='row'
+                                            justify='center'
+                                            alignItems='center'>
+                                            <img className={classes.media} src={`http://openweathermap.org/img/w/${weather.icon || '01d'}.png`} alt='Weather icon' />
+                                            <Typography
+                                                className={classes.fontPrimary}>
+                                                {`${weather.temp}°`}
+                                            </Typography>
+                                        </Grid>
                                         <Typography
                                             className={classes.fontPrimary}>
-                                            {`${weather.temp}°`}
+                                            {weather.desc}
                                         </Typography>
-                                    </Grid>
-                                    <Typography
-                                        className={classes.fontPrimary}>
-                                        {weather.desc}
-                                    </Typography>
-                                    <Grid
-                                        className={classes.humidityWindDisplay}
-                                        container
-                                        direction='row'
-                                        justify='space-between'
-                                        alignContent='center'>
                                         <Grid
+                                            className={classes.humidityWindDisplay}
                                             container
-                                            direction='column'
+                                            direction='row'
                                             justify='space-between'
-                                            alignItems='center'
-                                            item>
-                                            <Typography
-                                                className={classes.fontSecondary}>
-                                                Humidity
+                                            alignContent='center'>
+                                            <Grid
+                                                container
+                                                direction='column'
+                                                justify='space-between'
+                                                alignItems='center'
+                                                item>
+                                                <Typography
+                                                    className={classes.fontSecondary}>
+                                                    Humidity
                                              </Typography>
-                                            <Typography>
-                                                {`${weather.hum}%`}
+                                                <Typography>
+                                                    {`${weather.hum}%`}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid
+                                                container
+                                                direction='column'
+                                                justify='space-between'
+                                                alignItems='center'
+                                                item>
+                                                <Typography
+                                                    className={classes.fontSecondary}>
+                                                    Wind speed
                                             </Typography>
+                                                <Typography>
+                                                    {`${weather.wind} Km/h`}
+                                                </Typography>
+                                            </Grid>
                                         </Grid>
-                                        <Grid
-                                            container
-                                            direction='column'
-                                            justify='space-between'
-                                            alignItems='center'
-                                            item>
-                                            <Typography
-                                                className={classes.fontSecondary}>
-                                                Wind speed
-                                            </Typography>
-                                            <Typography>
-                                                {`${weather.wind} Km/h`}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                    <Typography
-                                        className={classes.fontSecondary}>
-                                        {weather.city}
-                                    </Typography>
-                                </>
-                        }
-                    </Grid>
-                </CardContent>
-            </Card>
-        </Box>
+                                        <Typography
+                                            className={classes.fontSecondary}>
+                                            {weather.city}
+                                        </Typography>
+                                    </>
+                            }
+                        </Grid>
+                    </CardContent>
+                </Card>
+            </Box>
     )
 }

@@ -38,7 +38,11 @@ export const Navbar = ({isFlipped, setIsFlipped}) => {
                 <Button
                     className={classes.text}
                     onClick={()=>{toggleAbout()}}>
-                    About
+                    {
+                        isFlipped 
+                            ? 'Go back'
+                            : 'Week forecast'
+                    }
                 </Button>
             </Box>
         </AppBar>

@@ -53,5 +53,6 @@ export const Chart = ({ isLoading, weather }) => {
                 </CardContent>
             </Card>
         </Box>
+
     )
 }

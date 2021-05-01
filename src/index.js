@@ -4,9 +4,7 @@ import './index.css';
 import { WeatherApp } from './WeatherApp';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <WeatherApp />
-  </React.StrictMode>,
+    <WeatherApp />,
   document.getElementById('root')
 );
 

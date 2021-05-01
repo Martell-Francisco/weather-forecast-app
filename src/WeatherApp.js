@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
-import { Box, makeStyles } from '@material-ui/core'
+import { Box, Fab, makeStyles, Zoom } from '@material-ui/core'
 import { Chart } from './components/Chart'
 import { WeatherDisplay } from './components/WeatherDisplay'
 import { getWeatherInfo } from './helpers/getWeatherInfo'
 import { getCurrentPosition } from './helpers/getCurrentPosition'
 import { getFullDate } from './helpers/getDateTimeFormat';
 import { Navbar } from './components/ui/Navbar'
-import { About } from './components/About'
+import { WeekWeatherDisplay } from './components/WeekWeatherDisplay';
+import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
 
 const useStyles = makeStyles({
     root: {
@@ -24,12 +25,20 @@ const useStyles = makeStyles({
         minWidth: '85vw',
         minHeight: '70vh'
     },
+    fab: {
+        color: 'inherit',
+        position: 'absolute',
+        bottom: '4rem',
+        right: '4rem',
+    },
+    icon: {
+        color: 'white'
+    },
 });
 
 const initialPos = {
     lat: '51.509865',
     lon: '-0.118092',
-    loading: false
 }
 
 const initialWeather = {
@@ -43,6 +52,7 @@ const initialWeather = {
     hum: '',
     wind: '',
     day: [],
+    week: [],
 }
 
 export const WeatherApp = () => {
@@ -52,27 +62,26 @@ export const WeatherApp = () => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+    const startGeolocation = () => {
         setIsLoading(true);
 
         getCurrentPosition()
-            .then((position) => {
-                setPos({
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude,
-                });
-
-
-            })
-            .catch((err) => {
-                console.error(err.message);
+        .then((position) => {
+            setPos({
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
             });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
+    }
+
+    useEffect(() => {
+        startGeolocation();
     }, [])
 
     useEffect(() => {
-       
-
         getWeatherInfo(pos)
             .then(data => {
                 const date = getFullDate(data.date);
@@ -87,13 +96,15 @@ export const WeatherApp = () => {
                     desc: data.desc,
                     hum: data.hum,
                     wind: data.wind,
-                    day: data.day,
                     city: data.city,
+                    day: data.day,
+                    week: data.week,
                 })
 
                 setIsLoading(false);
             })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+            
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pos])
 
     return (
@@ -124,7 +135,7 @@ export const WeatherApp = () => {
                             m={0}>
                             <Box
                                 display='flex'
-                                width='25%'
+                                width='28%'
                                 height='100%'
                                 justifyContent='center'
                                 alignItems='center'>
@@ -149,11 +160,26 @@ export const WeatherApp = () => {
                             height='100%'
                             p={2}
                             m={0}>
-                            <About />
+                            <WeekWeatherDisplay isLoading={isLoading} weather={weather} />
                         </Box>
                     </BackSide>
                 </Flippy>
+
             </Box>
+            <Zoom
+                in={true}
+                timeout={1500}
+                unmountOnExit>
+                <Fab
+                    className={classes.fab}
+                    size='large'
+                    color='primary'
+                    onClick={()=>{startGeolocation()}}>
+                    <MyLocationRoundedIcon
+                        fontSize='large'
+                        className={classes.icon} />
+                </Fab>
+            </Zoom>
         </Box>
     )
 }

@@ -1,4 +1,4 @@
-import { getTime } from "./getDateTimeFormat";
+import { getDate, getTime } from "./getDateTimeFormat";
 
 
 export const getWeatherInfo = async ({ lat = '51.509865', lon = '-0.118092' }) => {
@@ -16,6 +16,22 @@ export const getWeatherInfo = async ({ lat = '51.509865', lon = '-0.118092' }) =
             }
         })
 
+        const week = data.daily.slice(1,6);
+
+        const weekDetail = week.map(day=>{
+            return {
+                date: getDate(day.dt),
+                temp: {
+                    min: day.temp.min,
+                    max: day.temp.max,
+                },
+                hum: day.humidity,
+                desc: day.weather[0].main,
+                icon: day.weather[0].icon,
+            }
+        });
+
+
         const weatherInfo = {
             city: data.timezone,
             date: data.current.dt,
@@ -27,6 +43,7 @@ export const getWeatherInfo = async ({ lat = '51.509865', lon = '-0.118092' }) =
             hum: data.current.humidity,
             wind: data.current.wind_speed,
             day: dayDetail,
+            week: weekDetail,
         }
 
         return weatherInfo
